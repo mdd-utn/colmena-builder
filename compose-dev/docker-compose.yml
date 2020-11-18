@@ -1,0 +1,96 @@
+version: "3.3"
+services:
+          
+  eureka:
+    image: registry.gitlab.com/mdd.utn/eureka
+    networks:
+      - colmena-net
+    ports:
+      - "7000:7000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    restart: always
+        
+  config-server:
+    image: registry.gitlab.com/mdd.utn/colmena-config-server
+    networks:
+      - colmena-net
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - eureka
+    restart: always
+
+  proxy:
+    image: registry.gitlab.com/mdd.utn/zuul
+    networks:
+      - colmena-net
+    ports:
+      - "7001:7001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - eureka
+      - config-server
+    restart: always
+
+  colmena-audit:
+    image: registry.gitlab.com/mdd.utn/colmena-audit
+    networks:
+      - colmena-net
+    ports:
+      - "8001:8001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - eureka
+      - config-server
+    restart: always
+
+  colmena-github-webhook:
+    image: registry.gitlab.com/mdd.utn/colmena-github-webhook
+    networks:
+      - colmena-net
+    ports:
+      - "7100:7100"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - git-user=mdd-utn
+      - token-access=fc71faf6b51951bc1142932f5850c8974370998a
+      - token=11
+    depends_on:
+      - eureka
+      - config-server
+    restart: always
+  
+  
+  colmena-reverse:
+    image: registry.gitlab.com/mdd.utn/colmena-reverse
+    networks:
+      - colmena-net
+    ports:
+      - "7900:7900"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    depends_on:
+      - eureka
+      - config-server
+    restart: always
+    
+#  static:
+#    image: registry.gitlab.com/mdd.utn/colmena-resource-server
+#    volumes:
+#    - ../../colmena-audit/src/main/resources/static:/usr/share/nginx/static/colmena-audit/static
+#    ports:
+#    - "80:80"
+#    environment:
+#    - NGINX_HOST=static
+#    - NGINX_PORT=80
+#    restart: always
+#    networks:
+#      - colmena-net
+        
+networks:
+  colmena-net:

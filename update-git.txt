@@ -1,0 +1,58 @@
+git init
+
+git remote add gitlab https://gitlab.com/mdd.utn/colmena-builder.git
+
+git remote add github https://github.com/mdd-utn/colmena-builder.git
+
+
+git branch raul
+ 
+###fast!!
+
+cd /mnt/work/workspaces/workspace_antlr/colmena-builder
+ 
+ git status
+ 
+git checkout raul
+git add .
+git commit -m "first commit"
+git checkout develop
+git merge raul
+git push gitlab develop
+git push github develop
+
+git checkout master
+git merge develop
+git push gitlab master
+git push github master
+
+git checkout raul
+
+ 
+git branch raul
+
+# procedimiento para actualizar cada rama(miembro del equipo)
+
+git checkout raul 
+git push github raul
+git push gitlab raul
+
+git checkout develop 
+git merge raul
+git push github develop
+git push gitlab develop
+
+
+git checkout raul 
+git merge develop
+
+
+
+
+## producction
+
+git checkout master 
+git merge develop
+git push github master
+git push gitlab master
+
