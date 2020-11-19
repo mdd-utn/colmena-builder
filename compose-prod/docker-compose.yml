@@ -2,42 +2,42 @@ version: "3.3"
 services:
           
   eureka:
-    image: mddutn/colmena:master-eureka
+    image: mddutn/colmena:master-eureka-latest
     networks:
       - colmena-net
     ports:
       - "7000:7000"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
     restart: always
         
   config-server:
-    image: mddutn/colmena:master-colmena-config-server
+    image: mddutn/colmena:master-colmena-config-server-latest
     networks:
       - colmena-net
     ports:
       - "8888:8888"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - eureka
     restart: always
 
   proxy:
-    image: mddutn/colmena:master-zuul
+    image: mddutn/colmena:master-zuul-latest
     networks:
       - colmena-net
     ports:
       - "7001:7001"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - eureka
       - config-server
     restart: always
 
   colmena-audit:
-    image: mddutn/colmena:master-colmena-audit
+    image: mddutn/colmena:master-colmena-audit-latest
     networks:
       - colmena-net
     ports:
@@ -50,7 +50,7 @@ services:
     restart: always
 
   colmena-github-webhook:
-    image: mddutn/colmena:master-colmena-github-webhook
+    image: mddutn/colmena:master-colmena-github-webhook-latest
     networks:
       - colmena-net
     ports:
@@ -67,7 +67,7 @@ services:
   
   
   colmena-reverse:
-    image: mddutn/colmena:master-colmena-reverse
+    image: mddutn/colmena:master-colmena-reverse-latest
     networks:
       - colmena-net
     ports:
@@ -79,18 +79,18 @@ services:
       - config-server
     restart: always
     
-#  static:
-#    image: mddutn/colmena:master-colmena-resource-server
-#    volumes:
-#    - ../../colmena-audit/src/main/resources/static:/usr/share/nginx/static/colmena-audit/static
-#    ports:
-#    - "80:80"
-#    environment:
-#    - NGINX_HOST=static
-#    - NGINX_PORT=80
-#    restart: always
-#    networks:
-#      - colmena-net
+  static:
+    image: mddutn/colmena:master-colmena-resource-server-latest
+    volumes:
+    - ../../colmena-audit/src/main/resources/static:/usr/share/nginx/static/colmena-audit/static
+    ports:
+    - "80:80"
+    environment:
+    - NGINX_HOST=static
+    - NGINX_PORT=80
+    restart: always
+    networks:
+      - colmena-net
         
 networks:
   colmena-net:

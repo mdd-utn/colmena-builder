@@ -100,8 +100,8 @@ services:
   static:
     image: colmena-resource-server
     build: 
-      context: ../../colmena-resources-server/docker
-      dockerfile: Dockerfile-resourceServer
+      context: ../../colmena-resources-server
+      dockerfile: Dockerfile
       args:
        buildno: 1
     volumes:
