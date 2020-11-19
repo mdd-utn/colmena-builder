@@ -43,7 +43,7 @@ services:
     ports:
       - "8001:8001"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - eureka
       - config-server
@@ -56,7 +56,7 @@ services:
     ports:
       - "7100:7100"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
       - git-user=mdd-utn
       - token-access=fc71faf6b51951bc1142932f5850c8974370998a
       - token=11
@@ -73,7 +73,7 @@ services:
     ports:
       - "7900:7900"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
     depends_on:
       - eureka
       - config-server
