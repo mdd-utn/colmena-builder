@@ -58,7 +58,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=dev
       - git-user=mdd-utn
-      - token-access=fc71faf6b51951bc1142932f5850c8974370998a
+      - token-access=00dd2147341590a2ff8eec2267ae4c95ef0d51a3
       - token=11
     depends_on:
       - eureka
@@ -79,18 +79,18 @@ services:
       - config-server
     restart: always
     
-#  static:
-#    image: registry.gitlab.com/mdd.utn/colmena-resource-server
-#    volumes:
-#    - ../../colmena-audit/src/main/resources/static:/usr/share/nginx/static/colmena-audit/static
-#    ports:
-#    - "80:80"
-#    environment:
-#    - NGINX_HOST=static
-#    - NGINX_PORT=80
-#    restart: always
-#    networks:
-#      - colmena-net
+  static:
+    image: registry.gitlab.com/mdd.utn/colmena-resource-server
+    volumes:
+    - ../../colmena-audit/src/main/resources/static:/usr/share/nginx/static/colmena-audit/static
+    ports:
+    - "80:80"
+    environment:
+    - NGINX_HOST=static
+    - NGINX_PORT=80
+    restart: always
+    networks:
+      - colmena-net
         
 networks:
   colmena-net:
