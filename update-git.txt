@@ -11,6 +11,7 @@ git branch raul
 
 cd /mnt/work/workspaces/workspace_antlr/colmena-builder
  
+ 
  git status
  
 git checkout raul
