@@ -16,6 +16,8 @@ cd /mnt/work/workspaces/workspace_antlr/colmena-builder
 git checkout raul
 git add .
 git commit -m "first commit"
+git push gitlab raul
+git push github raul
 git checkout develop
 git merge raul
 git push gitlab develop
